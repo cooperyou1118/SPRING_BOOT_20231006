@@ -6,4 +6,5 @@
        기술 상세페이지 연동
        포트폴리오 작성
        [index.html : 실행/수정 완료](https://github.com/cooperyou1118/SPRING_BOOT_20231006)
-
+       
+6주차: 권한(ROLE) 접근 제어, 관리자 페이지 분리 완료
