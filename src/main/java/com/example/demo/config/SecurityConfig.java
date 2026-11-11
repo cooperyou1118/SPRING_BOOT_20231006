@@ -28,6 +28,7 @@ public class SecurityConfig {
                     "/login", "/signup", "/error").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                 // .requestMatchers("/admin/**").hasRole("ADMIN") // [6주차] 관리자만
+                .requestMatchers("/board", "/board/{id:\\d+}").permitAll() // 게시판 목록·상세 : 누구나
                 .requestMatchers("/admin/**","/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/hello").permitAll() //7주차 추가
                 .anyRequest().authenticated())

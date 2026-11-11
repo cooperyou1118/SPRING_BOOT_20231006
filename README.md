@@ -92,3 +92,17 @@
        403 Forbidden: 권한 없음 (일반 유저가 관리자 API 호출)
 
        404 Not Found: 대상이 존재하지 않음
+
+9주차: 게시판 CRUD와 본인 확인
+       게시판 기본 기능 (CRUD): Spring Boot와 JPA를 활용해 게시글 작성(Create), 조회(Read), 수정(Update), 삭제(Delete) 기능 구현.
+
+       JPA 연관관계 매핑 (@ManyToOne): 게시글(Post) 엔티티와 회원(Member) 엔티티를 N:1 다대일 관계(외래 키)로 연결하여 작성자 정보 관리.
+
+       서버 측 작성자 검증 (본인 확인): 수정 및 삭제 작업 시 SecurityContextHolder를 통해 로그인한 사용자 정보와 작성자 정보가 일치하는지 검증하고, 미일치 시 AccessDeniedException(403) 처리.
+
+10주차: 페이징, 검색 및 댓글 기능
+       페이징 (Spring Data JPA Pageable): `Pageable` 및 `PageRequest`를 활용하여 10개 단위로 게시글 목록을 나눈 페이징 처리와 SQL `LIMIT`/`OFFSET` 메커니즘 이해.
+
+       JPQL 기반 키워드 검색: `@Query`와 JPQL을 활용해 제목 및 내용에서 검색어를 찾는 파라미터 바인딩 기능 구현 (SQL Injection 방지).
+
+       댓글 기능 및 Cascade 삭제: 게시글과 댓글 간 연관관계(@OneToMany)를 설정하고, 게시글 삭제 시 관련 댓글이 자동 삭제되도록 `CascadeType.REMOVE` 적용 및 POST-Redirect-GET(PRG) 패턴을 이용한 댓글 중복 작성 방지.
