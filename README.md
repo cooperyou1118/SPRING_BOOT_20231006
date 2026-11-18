@@ -95,14 +95,16 @@
 
 9주차: 게시판 CRUD와 본인 확인
        게시판 기본 기능 (CRUD): Spring Boot와 JPA를 활용해 게시글 작성(Create), 조회(Read), 수정(Update), 삭제(Delete) 기능 구현.
-
        JPA 연관관계 매핑 (@ManyToOne): 게시글(Post) 엔티티와 회원(Member) 엔티티를 N:1 다대일 관계(외래 키)로 연결하여 작성자 정보 관리.
-
        서버 측 작성자 검증 (본인 확인): 수정 및 삭제 작업 시 SecurityContextHolder를 통해 로그인한 사용자 정보와 작성자 정보가 일치하는지 검증하고, 미일치 시 AccessDeniedException(403) 처리.
 
 10주차: 페이징, 검색 및 댓글 기능
        페이징 (Spring Data JPA Pageable): `Pageable` 및 `PageRequest`를 활용하여 10개 단위로 게시글 목록을 나눈 페이징 처리와 SQL `LIMIT`/`OFFSET` 메커니즘 이해.
-
        JPQL 기반 키워드 검색: `@Query`와 JPQL을 활용해 제목 및 내용에서 검색어를 찾는 파라미터 바인딩 기능 구현 (SQL Injection 방지).
-
        댓글 기능 및 Cascade 삭제: 게시글과 댓글 간 연관관계(@OneToMany)를 설정하고, 게시글 삭제 시 관련 댓글이 자동 삭제되도록 `CascadeType.REMOVE` 적용 및 POST-Redirect-GET(PRG) 패턴을 이용한 댓글 중복 작성 방지.
+
+11주차: 파일 업로드, 신청 바구니 및 트랜잭션
+       모집글 확장 및 포스터 이미지 업로드: 기존 `Post` 엔티티에 정원(`capacity`) 및 신청 인원(`appliedCount`) 필드를 추가하고, `MultipartFile`과 `FileStore`(확장자·매직바이트 검증, UUID 저장) 및 `WebConfig` 정적 리소스 매핑을 적용해 포스터 업로드 구현.
+       세션 기반 신청 바구니: `HttpSession`과 `LinkedHashSet`을 활용해 중복 없이 담은 순서를 유지하는 임시 신청 바구니(담기, 빼기, 조회) 구현.
+       트랜잭션 관리 (`@Transactional`): 바구니 일괄 신청 확정 시 `Enrollment` 저장 및 모집 인원 차감 로직을 하나의 작업 단위로 묶어, 정원 마감 등 예외 발생 시 전체 작업이 롤백(ACID 원자성)되도록 처리.
+       JPA 변경 감지 및 데이터 무결성: 트랜잭션 내 엔티티 상태 변경을 통한 자동 UPDATE(Dirty Checking) 적용, PRG 패턴과 `RedirectAttributes`를 이용한 메시지 전달, 신청 내역이 존재하는 모집글·회원의 무분별한 삭제 방지 처리.
