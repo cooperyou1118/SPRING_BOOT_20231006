@@ -108,3 +108,9 @@
        세션 기반 신청 바구니: `HttpSession`과 `LinkedHashSet`을 활용해 중복 없이 담은 순서를 유지하는 임시 신청 바구니(담기, 빼기, 조회) 구현.
        트랜잭션 관리 (`@Transactional`): 바구니 일괄 신청 확정 시 `Enrollment` 저장 및 모집 인원 차감 로직을 하나의 작업 단위로 묶어, 정원 마감 등 예외 발생 시 전체 작업이 롤백(ACID 원자성)되도록 처리.
        JPA 변경 감지 및 데이터 무결성: 트랜잭션 내 엔티티 상태 변경을 통한 자동 UPDATE(Dirty Checking) 적용, PRG 패턴과 `RedirectAttributes`를 이용한 메시지 전달, 신청 내역이 존재하는 모집글·회원의 무분별한 삭제 방지 처리.
+
+12주차: 12주차: WebSocket 및 STOMP 기반 실시간 알림
+       WebSocket 및 STOMP 설정: `spring-boot-starter-websocket` 의존성 추가 및 `WebSocketConfig`를 통해 `/ws` 엔드포인트와 메시지 브로커(`/topic`, `/queue`, `/user`) 구성.
+       실시간 남은 자리 브로드캐스팅: Java `record`(`SeatMessage`)와 `SimpMessagingTemplate`을 활용하여 신청 확정 및 취소 시 `/topic/seats` 구독자에게 남은 정원 정보를 새로고침 없이 즉시 전송.
+       트랜잭션 이벤트 기반 메시지 발행: `ApplicationEventPublisher`와 `@TransactionalEventListener(AFTER_COMMIT)`를 연동하여 DB 커밋이 완료된 후에만 실시간 메시지를 전송함으로써 롤백 시 유령 메시지 발생 방지.
+       1:1 개인 알림 기능 구현: `convertAndSendToUser` 및 `/user/queue/notifications` 경로를 활용해 모집글 작성자에게만 신청·취소·댓글 실시간 알림 전송.
